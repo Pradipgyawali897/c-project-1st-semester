@@ -1,0 +1,9 @@
+# Ignore credentials.h
+credentials.h
+
+# Ignore other common files and directories
+*.log
+*.tmp
+*.swp
+.DS_Store
+node_modules/

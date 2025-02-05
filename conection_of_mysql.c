@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <mysql/mysql.h>
+#include "credentials.h"
 
 void get_input_timestamps(char *start_timestamp, char *end_timestamp) {
     printf("Do you want to enter a timestamp range? (yes/no): ");
@@ -70,13 +71,7 @@ void execute_query(MYSQL *conn, const char *start_timestamp, const char *end_tim
 
 int main() {
     MYSQL *conn;
-    
-    // Access environment variables
-    const char *server = "localhost";
-    const char *user = getenv("DB_USER");     // Get DB_USER from environment
-    const char *password = getenv("DB_PASS"); // Get DB_PASS from environment
-    const char *database = getenv("DB_NAME"); // Get DB_NAME from environment
-
+   
     if (user == NULL || password == NULL || database == NULL) {
         fprintf(stderr, "ERROR: Missing environment variables\n");
         return 1;
@@ -89,13 +84,14 @@ int main() {
     // Initialize MySQL connection
     conn = mysql_init(NULL);
     if (conn == NULL) {
-        fprintf(stderr, "mysql_init() failed\n");
+        printf( "mysql_init() failed\n");
+
         exit(1);
     }
 
     // Connect to the database
-    if (mysql_real_connect(conn, server, user, password, database, 0, NULL, 0) == NULL) {
-        fprintf(stderr, "mysql_real_connect() failed\n");
+    if (!mysql_real_connect(conn, server, user, password, database, 0, NULL, 0)) {
+        printf("mysql_real_connect() failed\n");
         mysql_close(conn);
         exit(1);
     }
