@@ -9,7 +9,7 @@ void get_input_timestamps(char *start_timestamp, char *end_timestamp) {
     char choice[4];
     scanf("%s", choice);
 
-    if (strcmp(choice, "yes") == 0) {
+    if (strcmp(strlwr(choice), "yes") == 0) {
         // If the user wants to enter a start and end timestamp
         printf("Enter the start timestamp in format (YYYY-MM-DD HH:MM:SS): ");
         scanf("%s", start_timestamp);
@@ -71,12 +71,6 @@ void execute_query(MYSQL *conn, const char *start_timestamp, const char *end_tim
 
 int main() {
     MYSQL *conn;
-   
-    if (user == NULL || password == NULL || database == NULL) {
-        fprintf(stderr, "ERROR: Missing environment variables\n");
-        return 1;
-    }
-
     // User input for sender and receiver
     char sender[50], receiver[50];
     get_input_sender_receiver(sender, receiver);  // Get sender and receiver from the user
