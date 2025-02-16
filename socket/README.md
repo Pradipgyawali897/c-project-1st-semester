@@ -1,1 +1,0 @@
-This directory has the actual client server connection via socket.
